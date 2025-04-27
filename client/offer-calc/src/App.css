@@ -2,6 +2,7 @@
 
 #root {
   background-color: #e6e8ec;
+  border-radius: .5rem;
 }
 
 .logo {
@@ -41,9 +42,9 @@
 }
 
 .financial-data > div:not(:first-child) {
-  border-top: 1px solid darkgrey;
+  border-top: 1px solid #d5d5d5;
 }
 
 .player-info > div:not(:first-child) {
-  border-left: 1px solid darkgrey;
+  border-left: 1px solid #d5d5d5;
 }
