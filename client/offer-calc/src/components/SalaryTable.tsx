@@ -88,7 +88,7 @@ const SalaryTableContainer = ({data, handleComparePlayers, handleReset}:ISalaryT
     };      
 
     return (
-        <div className='child flex-1 flex-col rounded-md shadow-xl bg-white'>
+        <div className='flex-1 flex-col rounded-md shadow-xl p-4 bg-white'>
             <div className='flex justify-between m-2'>
               <span className='flex-3 text-2xl font-bold'>Salary Table</span>
             </div>

@@ -17,21 +17,7 @@ const App = () => {
   const [ offer, setOffer ] = useState<number>();
 
   const [ playerData, setPlayerData ] = useState<IPlayerData>();
-  const [ graphData, setGraphData ] = useState<ISalaryData[]>([]);
-
-
-  // Event handlers
-  const handleComparePlayers = (selectedPlayers: string[]) => { 
-    // Accepts a list of player UUIDs, and sets graphData with their respective salary records
-    const filteredSalaries = salaryData?.filter((record:ISalaryData) => selectedPlayers.includes(record.id));
-    setGraphData([...graphData, ...filteredSalaries || []]);
-  };
-
-  const handleReset = () => {
-    const filteredSalaries = graphData.filter((record:ISalaryData) => record.id === '1' || record.id==='0');
-    setGraphData(filteredSalaries);
-  }
-  
+  const [ graphData, setGraphData ] = useState<ISalaryData[]>([]);  
 
   // Fetch data when the page loads. Re-fetches on page refresh.
   useEffect(() => {
@@ -39,20 +25,42 @@ const App = () => {
       const { salaryData, offer } = await useSalaryData();
       setSalaryData(salaryData);
       setOffer(offer);
-      // setGraphData([...graphData, {"id": '1', "player-name": "Qualifying Offer", "player-salary": offer || 0, "player-year": "2016", "player-level":"MLB"}])
     };
     fetchSalaries();
   }, [])
 
   useEffect(() => {
-    const fetchPlayerData = async() => {
-      const playerData = await usePlayerData('0');
-      setPlayerData(playerData);
-      setGraphData([...graphData, playerData.salaryData])
+    if(offer){
+      const fetchPlayerData = async() => {
+        const playerData = await usePlayerData('0');
+        setPlayerData(playerData);
+        setGraphData([playerData.salaryData, {"player-name": "Qualifying Offer", "player-salary": offer, "id": "1", "player-level": "MLB", "player-year":"2016"}])
+      };
+      fetchPlayerData();
     };
-    fetchPlayerData();
-  }, [])
-  
+  }, [salaryData]);
+
+  // Event handlers
+  const handleComparePlayers = (selectedPlayers: string[]) => { 
+    // Accepts a list of player UUIDs, and sets graphData with their respective salary records
+    if(salaryData){
+      let data:ISalaryData[] = [];
+      for(const id of selectedPlayers){
+        if(!graphData.find((record:ISalaryData) => record.id === id)){
+          const playerSalary = salaryData.filter((record:ISalaryData) => record.id === id);
+          data.push(...playerSalary)
+        };
+      };
+      // const filteredSalaries = salaryData?.filter((record:ISalaryData) => selectedPlayers.includes(record.id)) || [];
+      setGraphData([...graphData, ...data]);
+    };
+  };
+
+  const handleReset = () => {
+    // Reset the graphData
+    const filteredSalaries = graphData.filter((record:ISalaryData) => record.id === '1' || record.id==='0');
+    setGraphData(filteredSalaries);
+  }
   
   return (
     // Gotta fix this mess
@@ -65,22 +73,17 @@ const App = () => {
 
         <PlayerPanel playerData={playerData} offer={offer}/>
 
-        <section className='flex-5 flex flex-row my-4 gap-8 parent'>
-          {/* Table */}
+        <section className='flex-4 flex flex-row my-4 gap-4 parent'>
           <SalaryTableContainer 
             data={salaryData}
             handleComparePlayers={handleComparePlayers}
             handleReset={handleReset}
           />
-          
-          {/* Chart */}
-          <div className='flex-1 flex justify-center rounded-lg  shadow-xl bg-white'>
-            <BarChart 
-              width={725} 
-              height={650} 
-              data={graphData}
-            />
-          </div>
+          <BarChart 
+            width={725} 
+            height={700} 
+            data={graphData}
+          />
         </section>
       </main>
   )

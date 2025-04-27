@@ -14,7 +14,7 @@ interface IBarChart {
 
 const BarChart = ({ width, height, data}:IBarChart) => {
     // Define margins of chart area
-    const margin = { top: 50, bottom: 35, left: 100, right: 10 };
+    const margin = { top: 30, bottom: 50, left: 100, right: 10 };
 
     // Bounds of svg
     const xMax = width - margin.left - margin.right;
@@ -24,18 +24,17 @@ const BarChart = ({ width, height, data}:IBarChart) => {
     const x = (d:ISalaryData) => d["player-name"];
     const y = (d:ISalaryData) => d["player-salary"];
 
-    // Color assignments
-    const color = (id:string) => {
-        switch(id){
-            case "0":
+    // Color assignments. Not dynamic at the moment
+    const color = (name:string) => {
+        switch(name){
+            case "Sanchez, Pablo":
                 return "#9f0712"
-            case "1":
+            case "Qualifying Offer":
                 return "gray"
             default:
                 return "#d4d4d4"
         }
     };
-
 
     // Create scales for bar chart
     const xScale = scaleBand({
@@ -51,21 +50,23 @@ const BarChart = ({ width, height, data}:IBarChart) => {
     });
 
     return (
-        <div className='max-h-[700px]'>
-            <div className='text-2xl font-bold bg-gray-200 w-full py-4'>Salary Comparison</div>
+        <div className='flex-1 flex flex-col rounded-lg shadow-xl bg-white'>
+            <div className='m-2 p-4'>
+                <span className='flex-3 text-2xl font-bold'>Salary Comparison</span>
+            </div>
             <svg width={width} height={height}>
                 <Group>
-                    {data.map((d) => {
+                    {data.map((d:ISalaryData) => {
                         const player = x(d);
                         const barHeight = yMax - yScale(y(d));
                         return (
                             <Bar 
-                                key={`${player}-bar`}
+                                key={d.id}
                                 x={xScale(player)}
                                 width={xScale.bandwidth()}
                                 y={yMax - barHeight}
                                 height={barHeight}
-                                fill={color(d.id)}
+                                fill={color(d['player-name'])}
                                 rx={4}
                             />
                         );
