@@ -1,4 +1,4 @@
-import { ISalaryData, IPlayerStats, IPlayerData } from "../types/dataTypes";
+import { IPlayerData } from "../types/dataTypes";
 
 /**
  * Fetches player data from /v1/player/{id}.

@@ -30,9 +30,7 @@ export const useSalaryData = async():Promise<IUseSalaryData> => {
         // Get the salaries from our endpoint
         const response = await fetch("http://localhost:8000/v1/salaries/");
         const { data:salaryData} = await response.json();
-        console.log(salaryData)
-    
-    
+        
         // Calc the qualifying offer
         const offer = findOffer(salaryData.slice(0,125));
        

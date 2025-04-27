@@ -6,9 +6,10 @@ import { ISalaryData, IPlayerData } from "./types/dataTypes";
 import { useSalaryData } from "./hooks/useSalaryData";
 import { usePlayerData } from "./hooks/usePlayerData";
 // Import components
-import SalaryTable from "./components/SalaryTable";
 import PlayerPanel from "./components/PlayerPanel";
+import SalaryTableContainer from "./components/SalaryTable";
 import BarChart from "./components/BarChart";
+
 
 const App = () => {
   
@@ -16,6 +17,20 @@ const App = () => {
   const [ offer, setOffer ] = useState<number>();
 
   const [ playerData, setPlayerData ] = useState<IPlayerData>();
+  const [ graphData, setGraphData ] = useState<ISalaryData[]>([]);
+
+
+  // Event handlers
+  const handleComparePlayers = (selectedPlayers: string[]) => { 
+    // Accepts a list of player UUIDs, and sets graphData with their respective salary records
+    const filteredSalaries = salaryData?.filter((record:ISalaryData) => selectedPlayers.includes(record.id));
+    setGraphData([...graphData, ...filteredSalaries || []]);
+  };
+
+  const handleReset = () => {
+    const filteredSalaries = graphData.filter((record:ISalaryData) => record.id === '1' || record.id==='0');
+    setGraphData(filteredSalaries);
+  }
   
 
   // Fetch data when the page loads. Re-fetches on page refresh.
@@ -24,6 +39,7 @@ const App = () => {
       const { salaryData, offer } = await useSalaryData();
       setSalaryData(salaryData);
       setOffer(offer);
+      // setGraphData([...graphData, {"id": '1', "player-name": "Qualifying Offer", "player-salary": offer || 0, "player-year": "2016", "player-level":"MLB"}])
     };
     fetchSalaries();
   }, [])
@@ -32,6 +48,7 @@ const App = () => {
     const fetchPlayerData = async() => {
       const playerData = await usePlayerData('0');
       setPlayerData(playerData);
+      setGraphData([...graphData, playerData.salaryData])
     };
     fetchPlayerData();
   }, [])
@@ -50,41 +67,18 @@ const App = () => {
 
         <section className='flex-5 flex flex-row my-4 gap-8 parent'>
           {/* Table */}
-          <div className='child flex-1 flex-col rounded-md shadow-xl bg-white'>
-            <div className='flex justify-between m-2'>
-              <span className='flex-3 text-2xl font-bold'>Salary Table</span>
-            </div>
-            <div className='overflow-auto h-[675px] rounded-md mx-2'>
-              <SalaryTable 
-                data={salaryData} 
-                // handleAddPlayer={handleAddPlayer} 
-                // selectedPlayers={selectedPlayers}
-              />
-            </div>
-            <div className='flex flex-1 gap-2 justify-center py-2 text-white font-bold'>
-                <button
-                  // disabled={selectedPlayers.length === 0}
-                  // onClick={handleComparePlayers}
-                  className='bg-red-800 hover:bg-red-900 disabled:cursor-not-allowed'
-                >
-                  Compare
-                </button>
-                <button
-                  // disabled={selectedPlayers.length === 0}
-                  // onClick={handleReset}
-                  className='bg-red-800 hover:bg-red-900 disabled:cursor-not-allowed'
-                >
-                  Reset
-                </button>
-              </div>
-          </div>
+          <SalaryTableContainer 
+            data={salaryData}
+            handleComparePlayers={handleComparePlayers}
+            handleReset={handleReset}
+          />
           
           {/* Chart */}
           <div className='flex-1 flex justify-center rounded-lg  shadow-xl bg-white'>
             <BarChart 
               width={725} 
               height={650} 
-              // data={graphData} 
+              data={graphData}
             />
           </div>
         </section>

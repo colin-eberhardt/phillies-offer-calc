@@ -1,4 +1,5 @@
 export interface ISalaryData {
+    "id": string;
     "player-name": string;
     "player-salary": number;
     "player-year": string;
