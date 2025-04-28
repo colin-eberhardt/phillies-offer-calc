@@ -47,6 +47,7 @@ The server `tranform_to_dict` function ignores records where salary data is blan
 1. **Implement a DB on the backend**. This would provide a more scalable, performant way to read data. Something like a Postgres DB for this type of structured data would work fine. We could also use this to fetch our player-specific info (like stats). Maybe leverage an ORM to perform CRUD statements. 
 2. **More services.** By this, I mean we could implement additional backend services to improve the insights provided by the tool. Imagine something like a "similar players service" which fetches players that are statistically similar to our target player. This could be the output of a model created by the Data Science team. Could enable users to get a better idea of the potential market value for the target player.
 3. **Improved state management**. There are some areas in the frontend wherein it may be suitable to leverage a reducer of sorts. For example, updating the graphData and dispatching actions from the "Compare" and "Reset" buttons.
-4> **Testing.** Implement pytests and frontend testing. Handle UI errors when/if server is down. 
+4. **Testing.** Implement pytests and frontend testing. Handle UI errors when/if server is down. 
+5. **i18n**. We have some data (columns, particularly) that could use some translation to make them easier to handle wrt human-readability.
 
 
