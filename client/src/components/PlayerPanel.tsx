@@ -34,11 +34,11 @@ const PlayerPanel = ({playerData, offer}:IPlayerPanel) => {
                 Pablo Sanchez
                 </span>
             </div>
-            <div className='flex-1 flex flex-col py-4 px-4 gap-2 text-black h-[28vh]'>
-                <div className='flex-1 text-2xl w-full border-b-2 pb-2'>2016 Stats</div>
-                <div className='flex-1 flex flex-col flex-wrap justify-start items-start w-full h-full p-2'>
+            <div className='flex-1 flex flex-col py-4 px-4 gap-2 text-black'>
+                <div className='flex-1 text-2xl w-full border-b-2 border-[#d5d5d5] pb-2'>2016 Stats</div>
+                <div className='flex-3 flex flex-wrap justify-start items-center gap-3 p-2'>
                     {Object.entries(playerData.stats).map(([key,value]) => (
-                        <div key={key} className="flex w-1/4 justify-between items-center gap-1 my-2 py-1 text-xl">
+                        <div key={key} className="flex justify-between items-center gap-2 my-2 py-1 text-xl">
                             <span className='font-light'>{statNameMap[key]}:</span>
                             <span className='font-bold'>{value}</span>
                         </div>

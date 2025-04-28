@@ -10,7 +10,11 @@ The benefits include eliminating extraneous copies of variables, executing less 
 
 ```
 def is_palindrome(s): 
+<<<<<<< Updated upstream
     i=0
+=======
+    i=0 
+>>>>>>> Stashed changes
     j=len(s)-1
     
     while i<j:

@@ -65,7 +65,7 @@ const App = () => {
   return (
     // TODO: Clean up this conditional rendering 
     salaryData && offer && playerData &&
-      <main className="flex flex-col rounded-lg w-[90vw] gap-4 p-2">
+      <main className="flex flex-col rounded-lg w-[1200px] gap-4 p-2">
         <header className="flex-1 px-1 py-4 rounded-md bg-white">
           <div className="text-2xl font-bold">Qualifying Offer Calculator</div>
         </header>
@@ -77,7 +77,7 @@ const App = () => {
             handleReset={handleReset}
           />
           <BarChart 
-            width={725} 
+            width={550} 
             height={700} 
             data={graphData}
           />
