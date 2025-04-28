@@ -12,13 +12,12 @@ import BarChart from "./components/BarChart";
 
 
 const App = () => {
-  
+  // Set some state
   const [ salaryData, setSalaryData ] = useState<ISalaryData[]>();
-  const [ offer, setOffer ] = useState<number>();
-
-  const [ playerData, setPlayerData ] = useState<IPlayerData>();
+  const [ offer, setOffer ] = useState<number | undefined>();
+  const [ playerData, setPlayerData ] = useState<IPlayerData|undefined>();
   const [ graphData, setGraphData ] = useState<ISalaryData[]>([]);  
-
+  
   // Fetch data when the page loads. Re-fetches on page refresh.
   useEffect(() => {
     const fetchSalaries = async() => {
@@ -44,6 +43,7 @@ const App = () => {
   const handleComparePlayers = (selectedPlayers: string[]) => { 
     // Accepts a list of player UUIDs, and sets graphData with their respective salary records
     if(salaryData){
+      // Avoid duplicate objects
       let data:ISalaryData[] = [];
       for(const id of selectedPlayers){
         if(!graphData.find((record:ISalaryData) => record.id === id)){
@@ -51,31 +51,28 @@ const App = () => {
           data.push(...playerSalary)
         };
       };
-      // const filteredSalaries = salaryData?.filter((record:ISalaryData) => selectedPlayers.includes(record.id)) || [];
+      // Set graphData
       setGraphData([...graphData, ...data]);
     };
   };
 
   const handleReset = () => {
     // Reset the graphData
-    const filteredSalaries = graphData.filter((record:ISalaryData) => record.id === '1' || record.id==='0');
+    const filteredSalaries = graphData?.filter((record:ISalaryData) => record.id === '1' || record.id==='0');
     setGraphData(filteredSalaries);
-  }
+  };
   
   return (
-    // Gotta fix this mess
-    salaryData && playerData && offer &&
-      <main className="flex flex-col rounded-lg w-[90vw] gap-1 p-2">
-        
-        <header className="flex-1 p-1 rounded-md bg-white">
-          <span className="text-2xl font-bold">Qualifying Offer Calculator</span>
+    // TODO: Clean up this conditional rendering 
+    salaryData && offer && playerData &&
+      <main className="flex flex-col rounded-lg w-[90vw] gap-4 p-2">
+        <header className="flex-1 px-1 py-4 rounded-md bg-white">
+          <div className="text-2xl font-bold">Qualifying Offer Calculator</div>
         </header>
-
         <PlayerPanel playerData={playerData} offer={offer}/>
-
-        <section className='flex-4 flex flex-row my-4 gap-4 parent'>
+        <section className='flex-4 flex flex-row gap-4 parent'>
           <SalaryTableContainer 
-            data={salaryData}
+            data={salaryData as ISalaryData[]}
             handleComparePlayers={handleComparePlayers}
             handleReset={handleReset}
           />

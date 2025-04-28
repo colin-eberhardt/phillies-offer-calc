@@ -88,9 +88,10 @@ const SalaryTableContainer = ({data, handleComparePlayers, handleReset}:ISalaryT
     };      
 
     return (
-        <div className='flex-1 flex-col rounded-md shadow-xl p-4 bg-white'>
-            <div className='flex justify-between m-2'>
+        <div className='flex-1 flex-col rounded-md shadow-xl gap-1 p-4 bg-white'>
+            <div className='flex flex-col justify-between m-2'>
               <span className='flex-3 text-2xl font-bold'>Salary Table</span>
+              <p className='text-sm'>Compare similar players on the chart to the right. Add ➕ players then <span className='font-bold'>Compare</span></p>
             </div>
             <div className='overflow-auto h-[675px] rounded-md mx-2'>
               <SalaryTable 

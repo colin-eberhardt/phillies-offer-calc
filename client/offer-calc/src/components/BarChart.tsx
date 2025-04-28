@@ -51,8 +51,9 @@ const BarChart = ({ width, height, data}:IBarChart) => {
 
     return (
         <div className='flex-1 flex flex-col rounded-lg shadow-xl bg-white'>
-            <div className='m-2 p-4'>
+            <div className='flex flex-col m-2 p-4'>
                 <span className='flex-3 text-2xl font-bold'>Salary Comparison</span>
+                <p className='text-sm'>Compare the Qualifying Offer to salaries of similar players.</p>
             </div>
             <svg width={width} height={height}>
                 <Group>
