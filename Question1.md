@@ -19,7 +19,5 @@ def is_palindrome(s):
     i+=1
     j-=1    
 
-return True
-
-
+    return True
 ```
