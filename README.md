@@ -39,6 +39,7 @@ The server `tranform_to_dict` function ignores records where salary data is blan
 
 # Architecture
 
+<img width="989" alt="Screenshot 2025-04-28 at 8 56 42 AM" src="https://github.com/user-attachments/assets/8d7ceaae-9411-4114-852e-5c5dd4187bf8" />
 
 
 # Future Enhancements
