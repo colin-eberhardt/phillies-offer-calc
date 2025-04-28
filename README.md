@@ -6,8 +6,8 @@ A small application to calculate a qualifying offer for our pending free agent: 
 ## Server
 
 If running for the first time:
-    * `docker compose build` to build the server image.
-    * `docker compose up -d` to start the server
+    - `docker compose build` to build the server image.
+    - `docker compose up -d` to start the server
 
 Otherwise, just run `docker compose up -d` to start the server.
 
