@@ -10,7 +10,8 @@ The benefits include eliminating extraneous copies of variables, executing less 
 
 ```
 def is_palindrome(s): 
-    i=0 j=len(s)-1
+    i=0
+    j=len(s)-1
     
     while i<j:
         if(s[i] != s[j]):
